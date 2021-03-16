@@ -1,0 +1,56 @@
+<!--工单列表头-->
+<div class="order-list-title-text" *ngIf="this.orderData.length">
+  <div class="select">
+    <nz-select
+      [ngModel]="selectWorkOrderType"
+      (ngModelChange)="workOrderChange($event)"
+      class="select-option"
+      nzSize="small"
+      nzAllowClear="false"
+      [nzPlaceHolder]=titleName>
+      <nz-option *ngFor="let item of orderData" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+    </nz-select>
+  </div>
+  <div class="batch-handle-button" title="{{indexLanguage.filter}}" (click)="showSearch()">
+    <span><i class="icon-l iconfont fiLink-filter index-icon-l"></i></span>
+  </div>
+  <div class="text-more" title="{{indexLanguage.more}}" (click)="goToWorkOrderPage()">
+    <span><i class="icon-l iconfont fiLink-more iconfont-style index-icon-l"></i></span>
+  </div>
+</div>
+
+<!--巡检工单列表-->
+<div [hidden]="defaultShowTable" class="work-order-table" [appTenantPermission]="'1-3-4'">
+  <xc-table [dataSet]="workOrderInspectionDataSet"
+            [pageBean]="workOrderInspectionPageBean"
+            [tableConfig]="workOrderInspectionTableConfig"
+            (pageChange)="pageWorkOrderInspection($event)"
+  >
+  </xc-table>
+</div>
+
+<!--销障工单列表-->
+<div [hidden]="!defaultShowTable" class="work-order-table" [appTenantPermission]="'1-3-5'">
+  <xc-table [dataSet]="workOrderClearDataSet"
+            [pageBean]="workOrderClearPageBean"
+            [tableConfig]="workOrderClearTableConfig"
+            (pageChange)="pageWorkOrderClear($event)"
+  >
+  </xc-table>
+</div>
+
+<!--工单状态装换模板-->
+<ng-template #statusTemp let-data="data">
+  <div class="hidden" title="{{data.statusName}}">
+    <span [ngClass]="data.statusClass"></span>
+    {{data.statusName}}
+  </div>
+</ng-template>
+
+
+<!--工单进度转换模板-->
+<ng-template #progressSpeed let-data="data">
+  <span>{{data.progressSpeed}}%</span>
+</ng-template>
+
+

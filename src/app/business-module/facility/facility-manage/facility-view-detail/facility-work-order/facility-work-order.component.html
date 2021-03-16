@@ -1,0 +1,33 @@
+<!--工单-->
+<nz-card nzTitle="{{language.picInfo.worker}}" [nzExtra]="extraTemplate">
+  <div class="equipment-tabs">
+    <nz-tabset >
+      <nz-tab *ngIf="checkHasRole('06-1-1')" nzTitle="{{workOrderLanguage.inspectionWorkOrder}}"
+              (nzClick)="onClickTab(workOrderTypeEnum.inspection)">
+        <!--巡检工单-->
+        <app-work-order-common #workOrderInspectionCommon
+          [id]="deviceId"
+          [facilityType]="facilityType">
+        </app-work-order-common>
+      </nz-tab>
+      <!--消障工单-->
+      <nz-tab *ngIf="checkHasRole('06-2-1')" nzTitle="{{workOrderLanguage.clearBarrierWorkOrder}}"
+              (nzClick)="onClickTab(workOrderTypeEnum.clear)">
+        <app-work-order-common #workOrderClearBarrierCommon
+          [id]="deviceId"
+          [facilityType]="facilityType">
+        </app-work-order-common>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</nz-card>
+
+<!--更多-->
+<ng-template #extraTemplate>
+  <a (click)="onClickShowMoreWorkOrder()"><span>{{language.more}} >></span></a>
+</ng-template>
+
+
+
+
+

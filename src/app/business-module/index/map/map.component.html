@@ -1,0 +1,111 @@
+<!--地图相关-->
+<div class="index-map-container">
+  <!--视图切换-->
+  <div class="view-switch">
+    <span class="view-tab left-view"></span>
+    <span class="view-tab plan-view" [ngClass]="{'tab-selected': viewIndex === planView}"
+          (click)="viewSwitch('planView')">规划数据</span>
+    <span class="view-tab project-view" [ngClass]="{'tab-selected': viewIndex === projectView}"
+          (click)="viewSwitch('projectView')">项目数据</span>
+    <span class="view-tab maintenance-view" [ngClass]="{'tab-selected': viewIndex=== maintenanceView}"
+          (click)="viewSwitch('maintenanceView')">运维数据</span>
+    <span class="view-tab right-view"></span>
+  </div>
+
+  <!--地图-->
+  <xc-map #mainMap
+          [mapConfig]="mapConfig"
+          [viewIndex]="viewIndex"
+          [data]="data"
+          [iconSize]="iconSize"
+          [centerPoint]="centerPoint"
+          [areaData]="areaData"
+          [deviceLocation]="deviceLocation"
+          [equipmentLocation]="equipmentLocation"
+          (showProgressBar)="showProgressBar()"
+          (hideProgressBar)="hideProgressBar()"
+          (mapEvent)="mapEvent($event)">
+  </xc-map>
+
+
+  <!--详情卡-->
+  <div *ngIf="isShowFacilityPanel && facilityId" class="facility-panel" [appTenantPermission]="'2'">
+    <div class="map-tab-container">
+      <app-facility-particulars-card [facilityId]="facilityId"
+                                     [facilityName]="facilityName"
+                                     [facilityCode]="facilityCode"
+                                     [idData]="idData"
+                                     [facilityPowerCode]="facilityPowerCode"
+                                     [isShowBusinessPicture]="isShowBusinessPicture">
+      </app-facility-particulars-card>
+    </div>
+  </div>
+
+  <!--刷新按钮-->
+  <div class="refresh-btn" (click)="refresh()" title="{{indexLanguage.refresh}}">
+    <div class="icon-refresh"></div>
+  </div>
+
+  <!--左侧浮窗-->
+  <app-index-operational-data [viewIndex]="viewIndex" [appTenantPermission]="'1'"></app-index-operational-data>
+
+  <!--右侧操作栏-->
+  <div class="facility-status">
+    <app-index-map-operationt [viewIndex]="viewIndex" [roleSelect]="roleSelect">
+    </app-index-map-operationt>
+  </div>
+
+  <!--统计相关-->
+  <div class="statistics-panel" [appTenantPermission]="'3'">
+    <div class="statistics-panel-charts">
+      <ng-container *ngFor="let item of statisticsConfig">
+        <app-index-statistics *ngIf="item.isShow" [title]="item.title" [type]="item.type"
+                              [data]="data"></app-index-statistics>
+      </ng-container>
+    </div>
+    <div class="statistics-panel-switch">
+      <div class="statistics-panel-switch-item iconfont fiLink-overview number"
+           [ngClass]="{'card-selected' : isShowCard}"
+           (click)="ClickAllItems()"></div>
+      <div *ngFor="let item of statisticsConfig"
+           class="statistics-panel-switch-item"
+           [ngClass]="{'card-selected' : item.isShow}"
+           (click)="statisticsItemClick(item)" [title]="item.label">
+        <div class="iconfont number" [ngClass]="item.icon"></div>
+      </div>
+      <!--地图设置-->
+      <div class="map-setting">
+        <i class="iconfont icon-fiLink fiLink-map-setting  bg-c-w height-number"
+           title="{{indexLanguage.mapConfigTitle}}"
+           (click)="openMapSettingModal()">
+        </i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--地图设置temp-->
+<ng-template #MapConfigTemp>
+  <div class="map-config-container">
+    <div class="map-config-box">
+      <div class="map-config-item">
+        <div class="map-config-item-text">{{indexLanguage.iconSize}}</div>
+        <div class="map-config-item-content">
+          <nz-select class="width-all" [(ngModel)]="facilityIconSizeValue"
+                     nzPlaceHolder="{{indexLanguage.pleaseSelect}}">
+            <ng-container *ngFor="let option of facilityIconSizeConfig">
+              <nz-option nzValue="{{option.value}}" nzLabel="{{option.label}}"></nz-option>
+            </ng-container>
+          </nz-select>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!--进度条-->
+<div class="progress-bar" *ngIf="isShowProgressBar">
+  <p>{{commonLanguage.loading}}...</p>
+  <nz-progress [nzPercent]="percent" nzStatus="active"></nz-progress>
+</div>
+

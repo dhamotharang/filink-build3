@@ -1,0 +1,38 @@
+<div class="facility-list-panel">
+  <!--选择区域-->
+  <div class="app-logic-area">
+    <div class="logic-left">
+      <app-index-left-tab
+        [tabList]="deviceTabList"
+        [active]="deviceActive"
+        (tabChange)="tabChange($event)"
+        [AreaType]="'deviceArea'"></app-index-left-tab>
+    </div>
+    <div class="logic-right">
+      <!--选择区域 planning-->
+      <app-planning-tree [appTenantPermission]="'1-1-1'" [hidden]="deviceActive !== deviceTabListEnum.planning"
+                         (planningDataEvent)="planningDataEvent($event)"
+                         [treeName]="'zTree'"></app-planning-tree>
+      <!--公共选择-->
+      <app-tab-device
+        [firstClick]="firstClick"
+        [setSmartPoleModelData]="setSmartPoleModelData"
+        [setConstructionStatusData]="setConstructionStatusData"
+        [facilityEquipmentConfig]="facilityEquipmentComponent"
+        (smartPoleModelData)="smartPoleModelSelect($event)"
+        (constructionStatusData)="constructionStatusSelect($event)"
+        [hidden]="deviceActive !== deviceTabListEnum.constructionStatus && deviceActive !== deviceTabListEnum.smartPoleModel">
+      </app-tab-device>
+    </div>
+  </div>
+  <!--规划列表-->
+  <div class="app-facility-list">
+    <app-planning-liat-left-card
+      [planningData]=planningData
+      [smartPoleModelData]=smartPoleModelData
+      [constructionStatusData]=constructionStatusData
+      [isShowPlanningOrProject]="true"
+    ></app-planning-liat-left-card>
+  </div>
+</div>
+

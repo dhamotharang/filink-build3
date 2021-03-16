@@ -1,0 +1,15 @@
+<!--地图框选-->
+<div class="select-polymerization">
+  <!--框选图标-->
+  <div class="select-polymerization-show iconfont icon-fiLink fiLink-juhefangshi select-polymerization-show-color"
+       title="{{'聚合方式'}}"
+       (click)="polymerizationShow()">
+  </div>
+  <!--框选展开-->
+  <div *ngIf="showPolymerization" class="polymerization-show">
+    <nz-radio-group [(ngModel)]="polymerizationValue" (ngModelChange)="selectPolymerization($event)">
+      <label class="polymerization-show-left" nz-radio nzValue="maintenance">区域方式聚合</label>
+      <label nz-radio nzValue="project">项目方式聚合</label>
+    </nz-radio-group>
+  </div>
+</div>

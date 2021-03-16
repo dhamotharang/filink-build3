@@ -1,0 +1,30 @@
+<div class="work-shift">
+  <div class="table-common-title">
+    <span>{{scheduleLanguage.workShift}}</span>
+  </div>
+  <div class="table-wrapper">
+    <xc-table
+      [dataSet]="dataSet"
+      [pageBean]="pageBean"
+      [tableConfig]="tableConfig"
+      (pageChange)="pageChange($event)">
+    </xc-table>
+  </div>
+</div>
+<ng-template #timeSearchTemp>
+  <div class="time-filter" >
+    <div  class="table-top-button-flex">
+      <nz-time-picker class="check-box-set-column"  [(ngModel)]="searchTime"
+                      [ngModelOptions]="{standalone: true}"
+                      (ngModelChange)="timeSelectChange($event)"></nz-time-picker>
+    </div>
+    <div class="date-filter-operator">
+      <nz-select class="check-box-set-column"  [(ngModel)]="timeOperator"
+                 [ngModelOptions]="{standalone: true}">
+        <nz-option nzValue="gt" nzLabel="{{tableLanguage.gt}}"></nz-option>
+        <nz-option nzValue="lt" nzLabel="{{tableLanguage.lt}}"></nz-option>
+        <nz-option nzValue="eq" nzLabel="{{tableLanguage.eq}}"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+</ng-template>

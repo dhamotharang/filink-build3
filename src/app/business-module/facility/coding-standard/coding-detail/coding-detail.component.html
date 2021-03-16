@@ -1,0 +1,64 @@
+<div class="coding-standard-container">
+    <app-detail-title [pageTitle]="pageTitle"></app-detail-title>
+    <div class="coding-standard-add">
+        <!--步骤条组件-->
+        <div class="xc-steps">
+            <app-xc-steps
+                    [isActiveStepsCount]="isActiveSteps"
+                    [setData]="setData">
+            </app-xc-steps>
+        </div>
+        <div class="assembly">
+            <!--第一步-->
+            <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+                <xc-form [column]="formColumn"
+                         (formInstance)="codingFormInstance($event)">
+                </xc-form>
+            </div>
+            <!-- 第二步-->
+            <div [hidden]="isActiveSteps !== finalValueEnum.STEPS_SECOND">
+                <app-new-coding-step-second #secondInfo
+                                            ></app-new-coding-step-second>
+            </div>
+            <!--按钮-->
+            <div class="coding-btn">
+                <!--上一步-->
+                <button nz-button nzType="primary" class="link-button next-step"
+                        (click)="handPrevSteps(isActiveSteps)"
+                        *ngIf="isActiveSteps !== finalValueEnum.STEPS_FIRST">
+                    {{commonLanguage.back}}
+                </button>
+                <!--下一步-->
+                <button nz-button nzType="primary" class="link-button next-step"
+                        (click)="handNextSteps(isActiveSteps)"
+                        [disabled]="nextButtonDisable"
+                        *ngIf="isActiveSteps !== finalValueEnum.STEPS_SECOND">
+                    {{commonLanguage.nextStep}}
+                </button>
+                <!--确定-->
+                <button nz-button nzType="primary" class="link-button ok-step"
+                        [nzLoading]="isSaveLoading"
+                        (click)="handStepsSubmit()"
+                        [disabled]="nextButtonDisable"
+                        *ngIf="isActiveSteps === finalValueEnum.STEPS_SECOND">
+                    {{commonLanguage.okText}}
+                </button>
+                <!--取消-->
+                <button class="link-button cancel-step"
+                        (click)="handCancelSteps()"
+                        nz-button nzType="danger">
+                    {{commonLanguage.cancel}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--资产类型选择器点击按钮-->
+<ng-template #assetTypeTemp let-formGroup="formGroup" let-col="col">
+    <div>
+        <input nz-input type="text" readonly>
+        <button type="button" class="search" (click)="showAssetTypeSelect()"><i
+                class="icon-l icon-search"></i></button>
+    </div>
+</ng-template>

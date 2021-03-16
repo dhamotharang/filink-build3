@@ -1,0 +1,45 @@
+<div class="schedule-calendar-wrap">
+  <div class="schedule-calendar-top">
+    <!-- 自动排班按钮 -->
+    <div class="auto-schedule" (click)="autoSchedule()" *ngIf="isShowAutoScueduleBtn">
+      <i class="icon-fiLink iconfont fiLink-clear-barrier"></i>
+      <span class="auto-schedule-text">{{scheduleLanguage.autoSchedule}}</span>
+    </div>
+    <!-- 人员搜索按钮 -->
+    <div class="search-member-wrap" *ngIf="isShowSearch">
+      <input type="text" nz-input placeholder="{{scheduleLanguage.peopleSearch}}" class="search-member" [(ngModel)]="memberValue">
+      <i nz-icon type="search" class="search-btn" (click)="memberSearch()"></i>
+      <i class="iconfont icon-fiLink fiLink-config-template" (click)="switchTableAndCalender.emit()"></i>
+    </div>
+  </div>
+  <div class="member-calendar-wrap">
+    <nz-calendar #calendarComponent [(ngModel)]="selectDate"
+                 [nzDateFullCell]="dateCellTpl">
+    </nz-calendar>
+  </div>
+  <ng-template #dateCellTpl let-date>
+    <div class="date-cell"
+         [class.select-date-cell]="isSelectDate(date)"
+         [class.disable-date-cell]="isDisable(date)"
+         (click)="dateCellClick(date)">
+      <div class="date-text">{{date | date : 'dd'}}</div>
+      <div class="date-content">
+      <!-- 每个日期展示的班组成员 -->
+        <ng-container *ngFor="let item of scheduleMemberDataList">
+          <div class="member-name-wrap" *ngIf="isShowMember(date, item.scheduleDate)">
+            <span class="prefix-name"></span>
+            <span>{{item.personName}}</span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<!--班组成员选择器-->
+<app-team-members *ngIf="isShowPersonModal"
+                  [(isVisible)]="isShowPersonModal"
+                  [selectIds]="selectTeamMemberIds"
+                  [teamIdList]="teamIdList"
+                  (handleOkEvent)="handlePersonOk($event)">
+</app-team-members>

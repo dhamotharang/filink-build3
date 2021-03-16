@@ -1,0 +1,115 @@
+<!--首页元素-->
+<div class="index-status-caption">
+  <!--状态说明-->
+  <div class="title-status-caption">{{this.language.stateDescription}}：</div>
+  <!--当前状态为租户可见-->
+  <div class="index-status-overview">
+    <i class="icon fiLink-overview iconfont icon-height"></i>
+    {{this.language.stateDescriptionVisible}}
+  </div>
+  <div class="index-status-hide">
+    <i class="icon fiLink-filink-hide-icon iconfont icon-height"></i>
+    {{this.language.stateDescriptionInvisible}}
+  </div>
+</div>
+
+<!--tab页-->
+<div class="index-select-box">
+
+  <!--左侧卡片-->
+  <div class="index-select-card index-select-card-left">
+    <div class="index-title-box">
+      <span class="index-title">{{this.language.leftCardVisible}}</span>
+      <span class="index-title-icon" (click)="titleIconClick(this.leftStatus,'leftTopCard')">
+        <i class="icon fiLink-overview iconfont icon-height" *ngIf="this.leftStatus ==='1'"></i>
+            <i class="icon fiLink-filink-hide-icon iconfont icon-height" *ngIf="this.leftStatus !=='1'"></i>
+      </span>
+    </div>
+    <div class="index-tabs">
+      <!--设施设备卡片切换-->
+      <div class="index-tabs-title-box">
+        <div class="index-tabs-title" *ngFor="let item of leftData"
+             [ngClass]="{'tab-left-selected': item.elementCode === this.leftTitleDefault}">
+          <span class="index-tabs-select"
+                (click)="titleClick(item.elementCode,'leftTopCard')">{{ item.elementCode | tenantConfigTranslate}}</span>
+          <span (click)="iconClick(leftData,item.elementCode,'title')">
+            <i class="icon fiLink-overview iconfont icon-height" *ngIf="item.isShow ==='1'"></i>
+            <i class="icon fiLink-filink-hide-icon iconfont icon-height" *ngIf="item.isShow !=='1'"></i>
+          </span>
+        </div>
+      </div>
+      <!--设施设备卡片切换内容-->
+      <div class="index-tabs-box">
+        <div class="card-title-box" *ngFor="let item of leftCardData">
+          <span class="card-title">{{item.elementCode  | tenantConfigTranslate}}</span>
+          <span class="card-title-icon" (click)="iconClick(leftCardData,item.elementCode)">
+      <i class="icon fiLink-overview iconfont icon-height" *ngIf="item.isShow==='1'"></i>
+      <i class="icon fiLink-filink-hide-icon iconfont icon-height" *ngIf="item.isShow!=='1'"></i>
+      </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--右侧卡片-->
+  <div class="index-select-card">
+    <div class="index-title-box">
+      <span class="index-title">{{this.language.detailsCardVisible}}</span>
+      <span class="index-title-icon" (click)="titleIconClick(this.rightStatus,'deviceDetailsCard')">
+        <i class="icon fiLink-overview iconfont icon-height" *ngIf="rightStatus ==='1'"></i>
+            <i class="icon fiLink-filink-hide-icon iconfont icon-height" *ngIf="rightStatus !=='1'"></i>
+  </span>
+    </div>
+    <div class="index-tabs">
+      <!--设施设备卡片切换-->
+      <div class="index-tabs-title-box">
+        <div class="index-tabs-title" *ngFor="let item of rightData"
+             [ngClass]="{'tab-right-selected': item.elementCode===this.rightTitleDefault}">
+          <span class="index-tabs-select"
+                (click)="titleClick(item.elementCode,'deviceDetailsCard')">{{item.elementCode| tenantConfigTranslate}}</span>
+          <span (click)="iconClick(rightData,item.elementCode,'title')">
+  <i class="icon fiLink-overview iconfont icon-height" *ngIf="item.isShow ==='1'"></i>
+  <i class="icon fiLink-filink-hide-icon iconfont icon-height" *ngIf="item.isShow !=='1'"></i>
+  </span>
+        </div>
+      </div>
+      <!--设施设备卡片切换内容-->
+      <div class="index-tabs-box">
+        <div class="card-title-box" *ngFor="let item of rightCardData">
+          <span class="card-title">{{item.elementCode| tenantConfigTranslate}}</span>
+          <span class="card-title-icon" (click)="iconClick(rightCardData,item.elementCode)">
+          <i class="icon fiLink-overview iconfont icon-height" *ngIf="item.isShow ==='1'"></i>
+          <i class="icon fiLink-filink-hide-icon iconfont icon-height" *ngIf="item.isShow !=='1'"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--右侧统计-->
+<div class="index-statistics-card">
+  <div class="index-statistics-icon">
+    <p class="statistics-icon" (click)="titleIconClick(this.statisticsStatus,'right')">
+      <i class="icon fiLink-overview iconfont icon-height" *ngIf="this.statisticsStatus ==='1'"></i>
+      <i class="icon fiLink-filink-hide-icon iconfont icon-height" *ngIf="this.statisticsStatus !== '1'"></i>
+    </p>
+  </div>
+  <div class="index-statistics-box" *ngFor="let item of statisticsData">
+    <div class="index-statistics-title">
+      <p class="statistics-icon" (click)="iconClick(statisticsData,item.elementCode)">
+        <i class="icon fiLink-overview iconfont icon-height" *ngIf="item.isShow==='1'"></i>
+        <i class="icon fiLink-filink-hide-icon iconfont icon-height" *ngIf="item.isShow!=='1'"></i>
+      </p>
+      <p class="statistics-title">{{item.elementCode | tenantConfigTranslate}}</p>
+    </div>
+  </div>
+</div>
+
+<!--配置按钮-->
+<div class="button-group">
+  <button class="link-button  margin-right20" [nzLoading]="submitLoading"
+          nz-button nzType="primary" (click)="updateMenuTemplate()">{{this.language.config}}</button>
+  <button class="link-button" nz-button nzType="danger" (click)="cancel()">{{language.cancelText}}</button>
+</div>

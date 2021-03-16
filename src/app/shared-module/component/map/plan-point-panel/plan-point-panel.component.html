@@ -1,0 +1,25 @@
+<!--项目/规划设施点-->
+  <div class="info-window-m">
+    <div class="info-window-m-name">
+      <div>
+        <span class="info-data-w"
+              [ngStyle]="{'background-color': infoData.data.pointStatusColor,'color':'#fff'}">{{infoData.data.pointStatus}}</span>
+        <span class="info-data-w-title">{{infoData.data.pointName}}</span>
+      </div>
+    </div>
+    <div class="info-window-m-name">
+      <div>
+      <span class="info-data-w"
+            [ngStyle]="{'background-color': '#36cfc9','color':'#fff'}">{{'型号'}}</span>
+        <span class="info-window-m-font">{{infoData.data.pointModel}}</span>
+      </div>
+    </div>
+    <div class="info-window-m-name">
+      <span class="info-data-w" *ngIf="viewIndex === planView"
+            [ngStyle]="{'background-color': '#9966FF','color':'#fff'}">{{'所属规划'}}</span>
+      <span class="info-data-w" *ngIf="viewIndex ===projectView"
+            [ngStyle]="{'background-color': '#9966FF','color':'#fff'}">{{'所属项目'}}</span>
+      <span class="info-window-m-font">{{infoData.data.projectPlanName}}</span>
+    </div>
+  </div>
+

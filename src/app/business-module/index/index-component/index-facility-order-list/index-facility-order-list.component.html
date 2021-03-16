@@ -1,0 +1,42 @@
+<!--工单列表-->
+<div class="facility-list-container" *ngIf="this.orderData.length">
+  <div class="order-select-title" [hidden]="!isSelect">
+    <div class="select">
+      <nz-select
+        class="select-option"
+        [(ngModel)]="searchWorkOrderName"
+        (ngModelChange)="searchWorkOrder($event)"
+        nzSize="small"
+        nzAllowClear="false">
+        <nz-option *ngFor="let item of orderData" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+      </nz-select>
+    </div>
+    <div class="facility-list-title-more" title="{{indexLanguage.more}}" (click)="goToWorkOrderPage()">{{indexLanguage.more}}<span>>></span></div>
+  </div>
+
+  <!--巡检工单列表-->
+  <div [hidden]="!defaultShowTable" [ngClass]="{'facility-table-card':isStyleSwitch }" class="facility-table" [appTenantPermission]="'2-3-2'">
+    <xc-table [dataSet]="workOrderDataSet"
+              [tableConfig]="workOrderTableConfig"
+    >
+    </xc-table>
+  </div>
+
+  <!--销障工单列表-->
+  <div [hidden]="defaultShowTable" [ngClass]="{'facility-table-card':isStyleSwitch }" class="facility-table" [appTenantPermission]="'2-3-3'">
+    <xc-table [dataSet]="workOrderDataSet"
+              [tableConfig]="workOrderTableConfig"
+    >
+    </xc-table>
+  </div>
+</div>
+
+<!--工单状态装换模板-->
+<ng-template #statusTemp let-data="data">
+  <div class="hidden" title="{{data.statusName}}">
+    <span [ngClass]="data.statusClass"></span>
+    {{data.statusName}}
+  </div>
+</ng-template>
+
+

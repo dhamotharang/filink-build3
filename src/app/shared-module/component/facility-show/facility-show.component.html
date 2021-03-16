@@ -1,0 +1,49 @@
+<!--设施展示-->
+<div class="facility-show iconfont icon-fiLink fiLink-map-layering facility-show-color"
+     (click)="showFacilityAndEquipmentCard()" title="{{indexLanguage.toShow}}">
+</div>
+
+<!--设施设备卡片悬浮窗-->
+<div class="facility-equipment-card"
+     *ngIf="isShowFacilityEquipmentCard">
+  <!--头部切换-->
+  <div class="facility-equipment-radio">
+    <div class="radio-group">
+      <div class="radio-group-div" (click)="showFacilityCard(true, otherMapFlag)">
+        <div [ngClass]="{'facility-radio': facilityRadioGroup}">
+          {{indexLanguage.facilitiesToShow}}
+        </div>
+      </div>
+      <div class="radio-group-div" (click)="showFacilityCard(false, otherMapFlag)">
+        <div [ngClass]="{'equipment-radio': !facilityRadioGroup}">
+          {{indexLanguage.equipmentToShow}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--设施部分-->
+  <div class="card-body" [hidden]="!facilityRadioGroup">
+    <nz-checkbox-wrapper (nzOnChange)="facilityCheckChange($event)">
+      <div class="facility-card" nz-row *ngFor="let item of deviceTypeList">
+        <div nz-row nzSpan="8">
+          <label nz-checkbox [nzValue]="item.code" [ngModel]="item.isModel">
+            <span class="facility-card-span" [class]="getFacilityIconStyle(item.code)"></span>
+            {{commonUtil.codeTranslate(indexFacilityTypeEnum, $nzI18n, item.code, languageEnum.index)}}
+          </label>
+        </div>
+      </div>
+    </nz-checkbox-wrapper>
+  </div>
+  <!--设备部分-->
+  <div class="card-body" [hidden]="facilityRadioGroup">
+    <nz-radio-group [(ngModel)]="equipmentRadioValue"
+                    (ngModelChange)="equipmentCheckChange($event)">
+      <div class="equipment-radio-child" *ngFor="let item of equipmentTypeList">
+        <label nz-radio nzValue="{{item.code}}">
+          <span class="icon" [class]="getEquipmentIconStyle(item.code)">  </span>
+          {{commonUtil.codeTranslate(indexEquipmentTypeEnum, $nzI18n, item.code, languageEnum.facility)}}
+        </label>
+      </div>
+    </nz-radio-group>
+  </div>
+</div>

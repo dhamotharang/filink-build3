@@ -1,0 +1,16 @@
+<nz-modal
+  *ngIf="editProductModelVisible"
+  [nzVisible]="editProductModelVisible"
+  [nzTitle]=""
+  (nzOnOk)="handleOk()"
+  [nzFooter]="modalFooter"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="handleCancel()"
+  nzWidth="70%"
+>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" class="link-button" (click)="handleOk()">{{commonLanguage.confirm}}</button>
+    <button nz-button nzType="danger" class="link-button"
+            (click)="handleCancel()">{{commonLanguage.cancel}}</button>
+  </ng-template>
+</nz-modal>

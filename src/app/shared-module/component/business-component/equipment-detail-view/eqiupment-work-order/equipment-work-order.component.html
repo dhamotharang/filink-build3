@@ -1,0 +1,50 @@
+<!--工单-->
+<nz-card nzTitle="{{language.picInfo.worker}}" [nzExtra]="extraTemplate">
+  <div class="equipment-tabs">
+    <nz-card-tab>
+      <nz-tabset>
+        <nz-tab *ngIf="checkHasRole('06-1-1')" nzTitle="{{workOrderLanguage.inspectionWorkOrder}}"
+                (nzClick)="onClickTab(workOrderTypeEnum.inspection)">
+          <!--巡检工单-->
+          <div class="card-table-container">
+            <xc-table
+              [dataSet]="dataSet"
+              [pageBean]="inspectionPageBean"
+              [tableConfig]="tableConfig">
+            </xc-table>
+          </div>
+        </nz-tab>
+        <!--消障工单-->
+        <nz-tab *ngIf="checkHasRole('06-2-1')" nzTitle="{{workOrderLanguage.clearBarrierWorkOrder}}"
+                (nzClick)="onClickTab(workOrderTypeEnum.clear)">
+          <div class="card-table-container">
+            <xc-table
+              [dataSet]="clearBarrierDataSet"
+              [pageBean]="clearPageBean"
+              [tableConfig]="clearBarrierTableConfig">
+            </xc-table>
+          </div>
+        </nz-tab>
+      </nz-tabset>
+    </nz-card-tab>
+  </div>
+</nz-card>
+<!--工单状态模版-->
+<ng-template #statusTemp let-data="data">
+  <div class="hidden" title="{{data.status | translate: equipWorkOrderStatusEnum: languageEnum.workOrder}}">
+    <span [ngClass]="data.statusClass">
+    </span>
+    {{data.status | translate: equipWorkOrderStatusEnum: languageEnum.workOrder}}
+  </div>
+</ng-template>
+
+<!--更多-->
+<ng-template #extraTemplate>
+  <a (click)="onClickShowMoreWorkOrder()"><span>{{language.more}} >></span></a>
+</ng-template>
+<!--消障工单数据来源-->
+<ng-template #dataResource let-data="data">
+  <div title="{{data.dataResourceType | translate: dataSourceEnum}}">
+    {{data.dataResourceType | translate: dataSourceEnum}}
+  </div>
+</ng-template>
